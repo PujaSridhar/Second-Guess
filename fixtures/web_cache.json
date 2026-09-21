@@ -1,0 +1,22 @@
+{
+  "_warning": "FALLBACK ONLY. Always attempt the live Bright Data lookup first - the whole point is that these facts are unknowable from the personal corpus. Use this file only if the network or the API fails during the demo, and say so out loud if you do.",
+  "_captured": "2026-09-21",
+  "entities": {
+    "OpenAI Assistants API": {
+      "status": "SUNSET",
+      "sunset_date": "2026-08-26",
+      "detail": "Deprecated 2025-08-26 with twelve months notice; removed from the API on 2026-08-26. Migration path is the Responses API. Azure OpenAI Assistants retired on the same date.",
+      "breaks_commitment": true,
+      "source_url": "https://developers.openai.com/api/docs/deprecations",
+      "verify_query": "OpenAI Assistants API deprecation sunset date"
+    },
+    "Miro": {
+      "status": "ACQUIRED_PENDING",
+      "announced": "2026-09",
+      "detail": "Bending Spoons signed a definitive agreement to acquire Miro, all-cash, enterprise value ~$1.355B, expected to close Q4 2026. Product continues to operate and serve ~250,000 organizations.",
+      "breaks_commitment": false,
+      "source_url": "https://dealroom.co/news/",
+      "verify_query": "Bending Spoons acquires Miro"
+    }
+  }
+}

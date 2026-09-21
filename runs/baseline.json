@@ -1,0 +1,15 @@
+{
+  "run": "baseline (no lint, no feedback)",
+  "commitments": [
+    {"description": "Send the revised pricing deck to Marcus Reyes at Northwind", "owed_to": "Marcus Reyes", "due_date": "2026-09-25", "status": "OK"},
+    {"description": "Ship the customer support assistant on the OpenAI Assistants API for the Sep 30 demo", "owed_to": "team", "due_date": "2026-09-30", "status": "OK"},
+    {"description": "Send Sam Okafor an intro to Lena Ortiz", "owed_to": "Sam Okafor", "due_date": "2026-09-23", "status": "OK"},
+    {"description": "Move the Q4 roadmap over to Miro", "owed_to": "Dana Whitfield", "due_date": null, "status": "OK"},
+    {"description": "Grab coffee with Nadia sometime soon", "owed_to": "Nadia Fournier", "due_date": null, "status": "OK"},
+    {"description": "Take a look at the paper Nadia mentioned", "owed_to": "Nadia Fournier", "due_date": null, "status": "OK"},
+    {"description": "Have the vendor shortlist to the team by the 29th", "owed_to": "team", "due_date": "2026-09-29", "status": "OK"},
+    {"description": "Send the updated security questionnaire tonight", "owed_to": "Puja", "due_date": "2026-09-14", "status": "OK"},
+    {"description": "Get the signed W-9 over to accounts payable by end of day", "owed_to": "Cascadia Partners", "due_date": "2026-09-11", "status": "OK"},
+    {"description": "Get to the Q4 planning doc at some point this month", "owed_to": "team", "due_date": null, "status": "OK"}
+  ]
+}

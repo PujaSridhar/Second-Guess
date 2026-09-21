@@ -1,0 +1,78 @@
+{
+  "as_of": "2026-09-21",
+  "owner": "Puja Sridhar <puja@example.com>",
+  "note": "Gold labels. 5 real open commitments owned by Puja; 10 traps that look like commitments but are not.",
+
+  "commitments": [
+    {
+      "key": "northwind-pricing-deck",
+      "description": "Send the revised pricing deck to Marcus Reyes at Northwind Analytics",
+      "owed_to": "Marcus Reyes (Northwind Analytics)",
+      "due_date": "2026-09-25",
+      "sources": ["email/2026-09-17-northwind-pricing-promise.md", "meetings/2026-09-18-northwind-call.md"],
+      "expected_status": "AT_RISK",
+      "why": "Due Friday 2026-09-25; calendar shows PTO 2026-09-24 through 2026-09-25. Prose promise vs structured calendar - no single app owns both sides.",
+      "conflict_class": "cannot-keep-it",
+      "needs_web": false
+    },
+    {
+      "key": "support-assistant-assistants-api",
+      "description": "Ship the customer-support assistant end to end on the OpenAI Assistants API for the Sep 30 demo",
+      "owed_to": "Internal team (Raj, Dana)",
+      "due_date": "2026-09-30",
+      "sources": ["meetings/2026-09-16-product-sync.md", "slack/eng-general.md"],
+      "expected_status": "BROKEN",
+      "why": "The OpenAI Assistants API was sunset on 2026-08-26, before the commitment was even made. Internally consistent, externally dead. Only discoverable via the live web.",
+      "conflict_class": "world-moved",
+      "needs_web": true,
+      "web_entity": "OpenAI Assistants API"
+    },
+    {
+      "key": "lena-intro",
+      "description": "Send Sam Okafor an intro to Lena Ortiz for the senior data platform role",
+      "owed_to": "Sam Okafor",
+      "due_date": "2026-09-23",
+      "sources": ["slack/dm-sam-okafor.md"],
+      "expected_status": "OK",
+      "why": "Due Wednesday 2026-09-23. Calendar is clear. Control case - proves the system is not just an alarm machine.",
+      "conflict_class": "none",
+      "needs_web": false
+    },
+    {
+      "key": "roadmap-to-miro",
+      "description": "Move the Q4 roadmap over to Miro",
+      "owed_to": "Dana Whitfield",
+      "due_date": null,
+      "sources": ["slack/eng-general.md", "meetings/2026-09-16-product-sync.md"],
+      "expected_status": "OK",
+      "why": "Miro is being acquired by Bending Spoons (announced Sept 2026, closing Q4). Real external change, but the product still operates - the commitment is NOT broken. Discrimination case: proves the resolver distinguishes 'changed' from 'broken'.",
+      "conflict_class": "changed-but-fine",
+      "needs_web": true,
+      "web_entity": "Miro"
+    },
+    {
+      "key": "sso-mid-tier",
+      "description": "Confirm to Marcus whether SSO is supported on the mid tier",
+      "owed_to": "Marcus Reyes (Northwind Analytics)",
+      "due_date": null,
+      "sources": ["meetings/2026-09-18-northwind-call.md"],
+      "expected_status": "OK",
+      "why": "Real undated commitment. Tests that undated obligations are not silently dropped.",
+      "conflict_class": "none",
+      "needs_web": false
+    }
+  ],
+
+  "traps": [
+    {"key":"coffee-sometime","text":"We should definitely grab coffee sometime soon","reason":"Vague social pleasantry, no obligation, no date","source":"email/2026-09-19-coffee.md"},
+    {"key":"read-the-paper","text":"I'll take a look at that paper when I get a chance","reason":"Hedged with 'when I get a chance' - not a commitment","source":"email/2026-09-19-coffee.md"},
+    {"key":"think-about-candidates","text":"I'll think about who else might fit","reason":"Hedged, no deliverable, no date","source":"slack/dm-sam-okafor.md"},
+    {"key":"raj-vendor-shortlist","text":"I'll have the shortlist to the team by the 29th","reason":"Real commitment but Raj owns it, not Puja","source":"email/2026-09-14-raj-handoff.md"},
+    {"key":"raj-security-questionnaire","text":"I'll send you the updated security questionnaire tonight","reason":"Raj's commitment to Puja, not Puja's commitment","source":"email/2026-09-14-raj-handoff.md"},
+    {"key":"w9-completed","text":"I'll get the signed W-9 over to you by end of day today","reason":"Puja's commitment but already completed - the same thread confirms receipt","source":"email/2026-09-11-invoice-done.md"},
+    {"key":"newsletter-reply","text":"Reply to this email and tell us what you're building","reason":"Marketing CTA, not a commitment","source":"email/2026-09-20-newsletter.md"},
+    {"key":"dataconf-cfp","text":"Submissions for DataConf 2027 close on October 15, 2026","reason":"An external deadline, not a commitment Puja made","source":"email/2026-09-16-cfp.md"},
+    {"key":"raj-staging-costs","text":"Raj to look into staging costs when he has a window","reason":"Not Puja's, and hedged","source":"meetings/2026-09-14-weekly-planning.md"},
+    {"key":"q4-planning-doc","text":"We should get to the Q4 planning doc at some point this month","reason":"Explicitly no owner assigned","source":"meetings/2026-09-14-weekly-planning.md"}
+  ]
+}

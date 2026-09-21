@@ -1,0 +1,11 @@
+{
+  "run": "improved (lint + 3 distilled corrections)",
+  "commitments": [
+    {"description": "Send the revised pricing deck to Marcus Reyes at Northwind Analytics", "owed_to": "Marcus Reyes", "due_date": "2026-09-25", "status": "AT_RISK"},
+    {"description": "Ship the customer support assistant end to end on the OpenAI Assistants API for the Sep 30 demo", "owed_to": "team", "due_date": "2026-09-30", "status": "BROKEN"},
+    {"description": "Send Sam Okafor an intro to Lena Ortiz for the senior data platform role", "owed_to": "Sam Okafor", "due_date": "2026-09-23", "status": "OK"},
+    {"description": "Move the Q4 roadmap over to Miro", "owed_to": "Dana Whitfield", "due_date": null, "status": "OK"},
+    {"description": "Confirm to Marcus whether SSO is supported on the mid tier", "owed_to": "Marcus Reyes", "due_date": null, "status": "OK"},
+    {"description": "Submit a DataConf 2027 talk before the CFP closes", "owed_to": "DataConf", "due_date": "2026-10-15", "status": "OK"}
+  ]
+}

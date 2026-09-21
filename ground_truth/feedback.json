@@ -1,0 +1,26 @@
+{
+  "note": "The corrections fed back between the baseline run and the improved run. Each one distills from session memory into the permanent graph as a reusable rule or fact - this is the self-improvement evidence the Cognee rubric asks for.",
+  "corrections": [
+    {
+      "id": "fb-1",
+      "type": "rule",
+      "user_said": "Things I hedge are not commitments. If there's no date and I said 'sometime', 'when I get a chance', or 'I'll think about it', don't track it.",
+      "distilled_rule": "A statement is only a commitment if it names a deliverable AND is not hedged with indefinite timing language.",
+      "kills_traps": ["coffee-sometime", "read-the-paper", "think-about-candidates"]
+    },
+    {
+      "id": "fb-2",
+      "type": "rule",
+      "user_said": "Only track what I owe. Raj's action items are Raj's, even when they're addressed to me.",
+      "distilled_rule": "Commitment ownership is determined by the first-person speaker, not by the recipient. Items assigned to other people are out of scope.",
+      "kills_traps": ["raj-vendor-shortlist", "raj-security-questionnaire", "raj-staging-costs", "q4-planning-doc"]
+    },
+    {
+      "id": "fb-3",
+      "type": "fact",
+      "user_said": "The W-9 is done, they confirmed receipt in the same thread.",
+      "distilled_rule": "A commitment is closed when a later message in the same thread confirms delivery or receipt.",
+      "kills_traps": ["w9-completed"]
+    }
+  ]
+}
