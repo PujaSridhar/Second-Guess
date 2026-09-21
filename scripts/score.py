@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic scorer for On The Hook.
+"""Deterministic scorer for Second Guess.
 
 The LLM extracts commitments. This file decides whether it was right.
 No model output is trusted here - every number below is computed in plain Python.

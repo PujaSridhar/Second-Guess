@@ -1,4 +1,4 @@
-# Submission — On The Hook
+# Submission — Second Guess
 
 > Pre-filled against Cognee's submission template from their last two hackathons.
 > Fill the [ ] gaps at the event; everything else is already true.
@@ -6,11 +6,11 @@
 ## Team
 - Team name: [ ]
 - Participants: Puja Sridhar
-- Project name: On The Hook
+- Project name: Second Guess
 
 ## Overview
 
-On The Hook extracts the commitments you made in prose — email, Slack, meeting
+Second Guess extracts the commitments you made in prose — email, Slack, meeting
 notes — and checks each one against your actual availability and against the live
 public web, surfacing the ones that are about to break. It self-improves: when
 you correct it, the correction distills out of session memory into the permanent

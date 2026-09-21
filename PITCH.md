@@ -61,7 +61,7 @@ Show the diff:
 
 **[2:50-3:00] Close**
 
-> "Everyone's brain can remember. This one notices when you're wrong."
+> "Everyone's brain can remember. Second Guess notices when you're wrong."
 
 ---
 

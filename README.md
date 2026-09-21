@@ -1,4 +1,4 @@
-# On The Hook
+# Second Guess
 
 **Your commitments live in email and Slack, where no app tracks them. This reads
 them, checks them against your calendar and the live web, and tells you which
