@@ -1,0 +1,252 @@
+<style>
+:root{
+  --ground:#f7f8fa; --panel:#ffffff; --panel-2:#f1f3f7;
+  --ink:#141922; --ink-2:#4a5464; --ink-3:#78839a;
+  --rule:#dfe3ec; --rule-2:#eceff5;
+  --accent:#0f6f7d; --accent-soft:#e2f1f3;
+  --ok:#2f7d4f; --ok-soft:#e6f2ea;
+  --risk:#9a6700; --risk-soft:#fdf3d8;
+  --broken:#b3261e; --broken-soft:#fbe6e4;
+  --shadow:0 1px 2px rgba(20,25,34,.06),0 8px 24px -16px rgba(20,25,34,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0e1116; --panel:#161b23; --panel-2:#1c222c;
+    --ink:#e8ecf3; --ink-2:#a3adbe; --ink-3:#77839a;
+    --rule:#28303c; --rule-2:#202733;
+    --accent:#5cc6d4; --accent-soft:#12303a;
+    --ok:#6cc48c; --ok-soft:#13291d;
+    --risk:#e0b44a; --risk-soft:#2f2612;
+    --broken:#f08a80; --broken-soft:#33191a;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0e1116; --panel:#161b23; --panel-2:#1c222c;
+  --ink:#e8ecf3; --ink-2:#a3adbe; --ink-3:#77839a;
+  --rule:#28303c; --rule-2:#202733;
+  --accent:#5cc6d4; --accent-soft:#12303a;
+  --ok:#6cc48c; --ok-soft:#13291d;
+  --risk:#e0b44a; --risk-soft:#2f2612;
+  --broken:#f08a80; --broken-soft:#33191a;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 72px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* masthead */
+header{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:20px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.022em;margin:0;text-wrap:balance}
+.tag{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 6px}
+.sub{color:var(--ink-2);font-size:14.5px;margin:8px 0 0;max-width:60ch}
+.asof{font-size:12px;color:var(--ink-3);text-align:right;line-height:1.7}
+
+/* score strip */
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:8px;overflow:hidden;margin:28px 0 36px}
+.score{background:var(--panel);padding:16px 18px}
+.score .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.score .v{font-size:27px;font-weight:600;margin-top:5px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.score .d{font-size:12px;color:var(--ink-2);margin-top:2px;font-variant-numeric:tabular-nums}
+.up{color:var(--ok)}
+
+h2{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px}
+
+/* triage rows — severity stripe, not cards */
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--rule);
+  border-radius:6px;padding:15px 18px}
+.row.ok{border-left-color:var(--ok)}
+.row.risk{border-left-color:var(--risk);box-shadow:var(--shadow)}
+.row.broken{border-left-color:var(--broken);box-shadow:var(--shadow)}
+.rhead{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:baseline}
+.pill{font-size:10px;font-weight:600;letter-spacing:.09em;padding:3px 8px;border-radius:3px;
+  white-space:nowrap;font-family:"IBM Plex Mono",monospace}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.risk{background:var(--risk-soft);color:var(--risk)}
+.pill.broken{background:var(--broken-soft);color:var(--broken)}
+.title{font-weight:600;font-size:15.5px;flex:1;min-width:220px}
+.due{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.owed{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.why{font-size:13.5px;color:var(--ink-2);margin-top:10px;max-width:74ch}
+
+/* evidence */
+.ev{margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule)}
+.evrow{display:grid;grid-template-columns:78px 1fr;gap:8px 12px;font-size:12.5px;margin-bottom:6px}
+.evk{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:600;padding-top:2px}
+.quote{color:var(--ink);border-left:2px solid var(--accent);padding-left:10px}
+.path{color:var(--ink-2);word-break:break-all}
+a{color:var(--accent)}
+.live{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.1em;
+  background:var(--accent-soft);color:var(--accent);padding:2px 6px;border-radius:3px;margin-left:6px}
+
+/* draft */
+.draft{margin-top:12px;background:var(--panel-2);border:1px solid var(--rule-2);
+  border-radius:5px;padding:13px 15px}
+.dlab{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:600;margin-bottom:8px}
+.dmeta{font-size:12.5px;color:var(--ink-2);margin-bottom:8px}
+.dmeta b{color:var(--ink);font-weight:600}
+.dbody{font-size:13.5px;color:var(--ink);max-width:68ch}
+.unsent{font-size:11px;color:var(--ink-3);margin-top:9px;font-style:italic}
+
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-3);max-width:72ch}
+footer b{color:var(--ink-2);font-weight:600}
+footer p{margin:0 0 7px}
+@media (max-width:560px){
+  .evrow{grid-template-columns:1fr;gap:3px}
+  h1{font-size:25px}
+}
+</style>
+<style>
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:26px 0 8px}
+button{font-family:inherit;font-size:14px;font-weight:600;padding:10px 20px;border-radius:6px;
+  border:1px solid var(--accent);background:var(--accent);color:var(--ground);cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.ghost{background:transparent;color:var(--accent)}
+label{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:6px;cursor:pointer}
+.log{background:var(--panel-2);border:1px solid var(--rule);border-radius:6px;padding:12px 15px;
+  font-size:12.5px;color:var(--ink-2);margin:14px 0 0;display:none}
+.log.on{display:block}
+.log div{padding:2px 0}
+.log div::before{content:"› ";color:var(--accent)}
+.spin{display:inline-block;width:11px;height:11px;border:2px solid var(--rule);
+  border-top-color:var(--accent);border-radius:50%;animation:s .7s linear infinite;margin-right:7px}
+@keyframes s{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.empty{color:var(--ink-3);font-size:14px;padding:34px 0;text-align:center;
+  border:1px dashed var(--rule);border-radius:8px}
+.err{background:var(--broken-soft);color:var(--broken);border:1px solid var(--broken);
+  border-radius:6px;padding:13px 16px;font-size:13.5px;margin-top:14px}
+.scores{display:none}.scores.on{display:grid}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <p class="tag">Commitment triage · live</p>
+    <h1>Second Guess</h1>
+    <p class="sub">The things you're on the hook for live in sentences, not apps. This reads
+    them out of email, Slack and meeting notes, then checks each one against your calendar
+    and the live web.</p>
+  </div>
+  <div class="asof mono" id="asof">not yet run</div>
+</header>
+
+<div class="bar">
+  <button id="go">Run analysis</button>
+  <label><input type="checkbox" id="learned" checked> Use rules learned from Cognee</label>
+  <label><input type="checkbox" id="web" checked> Live web check (Bright Data)</label>
+</div>
+<div class="log" id="log"></div>
+<div id="err"></div>
+
+<div class="scores" id="scores"></div>
+
+<h2 id="h2" style="margin-top:30px">Open commitments</h2>
+<div class="rows" id="rows"><div class="empty">Nothing yet. Run the analysis.</div></div>
+
+<footer>
+  <p><b>Who decides what.</b> The model proposes commitments and names external entities.
+  Every verdict is plain Python — calendar collision, closure detection, deduplication,
+  and an evidence gate that refuses BROKEN without a dated, citable source. Scores are
+  computed against a labelled set; the model never scores itself.</p>
+  <p><b>Honest limits.</b> The corpus is seeded and the internal conflicts are planted. The
+  external facts are real and are fetched live each run — which is why the numbers move
+  between runs.</p>
+</footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CLS = {BROKEN:"broken", AT_RISK:"risk", OK:"ok"};
+const LAB = {BROKEN:"BROKEN", AT_RISK:"AT RISK", OK:"OK"};
+const ORD = {BROKEN:0, AT_RISK:1, OK:2};
+
+function evrow(k, v, cls){ return `<div class="evrow"><div class="evk">${esc(k)}</div><div class="${cls||'path'} mono">${v}</div></div>`; }
+
+function card(c){
+  const cls = CLS[c.status] || "ok";
+  let ev = "";
+  if (c.quote) ev += evrow("Said", esc(c.quote), "quote");
+  (c.sources || [c.source]).filter(Boolean).forEach(s => ev += evrow("Source", esc(s)));
+  if (c.web){
+    let bits = [];
+    if (c.web.source_url) bits.push(`<a href="${esc(c.web.source_url)}" target="_blank" rel="noopener">${esc(c.web.source_url)}</a>`);
+    else bits.push(esc(c.web.finding));
+    if (c.web.event_date) bits.push("· event " + esc(c.web.event_date));
+    if (c.web._live) bits.push('<span class="live">LIVE</span>');
+    ev += evrow("Web", bits.join(" "));
+  }
+  if (c.suggested_date) ev += evrow("Next free", esc(c.suggested_date));
+  let draft = "";
+  if (c.draft && c.draft.body){
+    draft = `<div class="draft"><div class="dlab">Drafted follow-up</div>
+      <div class="dmeta"><b>To</b> ${esc(c.draft.to)} &nbsp;·&nbsp; <b>Subject</b> ${esc(c.draft.subject)}</div>
+      <div class="dbody">${esc(c.draft.body)}</div>
+      <div class="unsent">Not sent. Drafts are shown for a human to read first.</div></div>`;
+  }
+  return `<div class="row ${cls}">
+    <div class="rhead"><span class="pill ${cls}">${LAB[c.status] || esc(c.status)}</span>
+      <span class="title">${esc(c.description)}</span>
+      <span class="due mono">${esc(c.due_date || "no date")}</span></div>
+    <div class="owed">owed to ${esc(c.owed_to || "—")}</div>
+    <p class="why">${esc(c.why)}</p>
+    <div class="ev">${ev}</div>${draft}</div>`;
+}
+
+function tile(k, v, d){ return `<div class="score"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d||"&nbsp;"}</div></div>`; }
+
+function render(st){
+  $("#log").className = "log on";
+  $("#log").innerHTML = st.log.map(l => `<div>${esc(l)}</div>`).join("")
+    + (st.status === "running" ? '<div style="color:var(--accent)"><span class="spin"></span>working…</div>' : "");
+  $("#err").innerHTML = st.error ? `<div class="err">${esc(st.error)}</div>` : "";
+  if (!st.result) return;
+  const cs = [...st.result.commitments].sort((a,b) => (ORD[a.status]??9) - (ORD[b.status]??9));
+  const n = s => cs.filter(c => c.status === s).length;
+  $("#asof").innerHTML = `${cs.length} open · ${n("AT_RISK")} at risk · ${n("BROKEN")} broken`;
+  $("#rows").innerHTML = cs.map(card).join("") || '<div class="empty">No open commitments.</div>';
+  const s = st.scores;
+  if (s){
+    $("#scores").className = "scores on";
+    $("#scores").innerHTML = tile("Precision", s.precision.toFixed(2))
+      + tile("Recall", s.recall.toFixed(2))
+      + tile("F1", s.f1.toFixed(2))
+      + tile("Verdict accuracy", s.lint_accuracy.toFixed(2), "deterministic")
+      + tile("Found", cs.length, "this run");
+  }
+}
+
+let timer;
+async function poll(){
+  const st = await (await fetch("/api/state")).json();
+  render(st);
+  if (st.status === "running") return;
+  clearInterval(timer); timer = null;
+  $("#go").disabled = false; $("#go").textContent = "Run again";
+}
+
+$("#go").onclick = async () => {
+  $("#go").disabled = true; $("#go").textContent = "Running…";
+  $("#rows").innerHTML = '<div class="empty">Running the pipeline…</div>';
+  $("#scores").className = "scores";
+  const q = `learned=${$("#learned").checked?1:0}&web=${$("#web").checked?1:0}`;
+  await fetch("/api/run?" + q);
+  timer = setInterval(poll, 900); poll();
+};
+</script>
