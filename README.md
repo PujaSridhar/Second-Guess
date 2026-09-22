@@ -132,7 +132,26 @@ cp .env.example .env                  # then fill it in
 
 Discord: `#hackathon-sf-sept-26`
 
-**Verified API surface** (installed and introspected, not guessed):
+**Verified live against the hackathon tenant (2026-09-21):**
+
+```python
+# cognee 1.6.0 - Cloud path. serve() IS a coroutine.
+client = await cognee.serve(url=COGNEE_BASE_URL, api_key=COGNEE_API_KEY)
+await client.remember(text, dataset_name=...)   # returns status "running"
+await client.recall(query_text=..., datasets=[...])  # 409s until indexed - poll
+```
+
+Gotchas that cost real time, already fixed here:
+
+- `CACHE_BACKEND=fs` — **not** `filesystem`. The docs say filesystem; the code
+  only accepts `redis|fs|tapes|sqlite|postgres` and dies on import otherwise.
+- `cognee.serve()` must be awaited. It looks synchronous; it is not.
+- Local SDK mode raises `KeylessExtractorNotInstalledError` without an
+  `LLM_API_KEY`. **Go through the Cloud tenant instead** — it runs extraction
+  server-side, needs no local LLM key, and scores the Cloud bonus.
+- `recall()` returns 409 until indexing finishes. Retry, don't sleep-and-hope.
+- Bright Data MCP auto-creates `mcp_unlocker` and `mcp_browser` zones on first
+  launch. Verified working via `npx -y @brightdata/mcp` with `API_TOKEN`.
 
 ```python
 # strands-agents 1.56.0
@@ -140,15 +159,7 @@ AnthropicModel(client_args={"api_key": ...}, model_id=..., max_tokens=...)
 Agent(model=..., tools=[...], system_prompt=...)
 from mcp import StdioServerParameters, stdio_client
 from strands.tools.mcp import MCPClient
-
-# cognee
-await cognee.remember(data, dataset_name=..., session_id=None, self_improvement=True)
-await cognee.recall(query_text=..., datasets=[...])
 ```
-
-Strands is model-agnostic and the Bright Data guide itself uses `ANTHROPIC_API_KEY`.
-Use Anthropic direct; don't spend hackathon minutes on IAM. AWS credits are a
-prize, not a door gift.
 
 ## First 15 minutes at the event
 
