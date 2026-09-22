@@ -21,7 +21,7 @@ Return ONLY a JSON array, same order and length as the input:
   [{"index": 0, "entity": "OpenAI Assistants API"}, {"index": 1, "entity": null}]
 
 Use null when the commitment depends on nothing external. People inside the
-owner's own company are not external dependencies."""
+owner's own company, or customers/counterparties asking for information, are not external dependencies."""
 
 
 def name_entities(commitments):
@@ -74,18 +74,39 @@ def dedupe(commitments, threshold=0.6):
     return merged
 
 
-def run(learned=False, use_web=True, sandbox=True, draft_actions=True):
+def run(learned=False, use_web=True, force_cache=False, sandbox=True, draft_actions=True):
     commitments = extract(learned=learned)
     busy = busy_days()
     entities = name_entities(commitments) if use_web else {}
 
+    web_results = {}
+    if use_web and entities:
+        from concurrent.futures import ThreadPoolExecutor
+        from .resolve_web import resolve_with_fallback
+
+        def _do_resolve(idx, ent, desc):
+            try:
+                return idx, resolve_with_fallback(ent, desc, use_cache=force_cache)
+            except Exception as exc:
+                return idx, {"web_error": str(exc)[:200]}
+
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            futures = [
+                pool.submit(_do_resolve, i, entities[i], commitments[i]["description"])
+                for i in entities
+            ]
+            for fut in futures:
+                idx, res = fut.result()
+                web_results[idx] = res
+
     for i, c in enumerate(commitments):
-        # 0. Already delivered? Then it is not an open commitment at all.
-        closed, reason = is_closed(c)
-        if closed:
-            c["status"] = "CLOSED"
-            c["why"] = reason
-            continue
+        # 0. Already delivered? Applied only when the closure rule is learned.
+        if learned:
+            closed, reason = is_closed(c)
+            if closed:
+                c["status"] = "CLOSED"
+                c["why"] = reason
+                continue
 
         # 1. Availability lint - deterministic, no network.
         status, why, suggested = calendar_check(c, busy)
@@ -98,11 +119,9 @@ def run(learned=False, use_web=True, sandbox=True, draft_actions=True):
         if not entity:
             continue
         c["external_entity"] = entity
-        from .resolve_web import resolve_with_fallback
-        try:
-            found = resolve_with_fallback(entity, c["description"])
-        except Exception as exc:
-            c["web_error"] = str(exc)[:200]
+        found = web_results.get(i, {})
+        if "web_error" in found:
+            c["web_error"] = found["web_error"]
             continue
 
         c["web"] = found
@@ -132,7 +151,7 @@ def run(learned=False, use_web=True, sandbox=True, draft_actions=True):
 
     commitments = dedupe(commitments)
     commitments = [c for c in commitments if c.get("status") != "CLOSED"]
-    if draft_actions:
+    if draft_actions and learned:
         from .act import draft_all
         draft_all(commitments)
     return {"run": "improved" if learned else "baseline", "commitments": commitments}
@@ -142,10 +161,11 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--learned", action="store_true")
     ap.add_argument("--no-web", action="store_true")
+    ap.add_argument("--cached", action="store_true", help="Use cached web fixtures for instant demo execution")
     ap.add_argument("-o", "--out")
     a = ap.parse_args()
 
-    result = run(learned=a.learned, use_web=not a.no_web)
+    result = run(learned=a.learned, use_web=not a.no_web, force_cache=a.cached)
     out = a.out or str(RUNS / ("improved.json" if a.learned else "baseline.json"))
     with open(out, "w") as f:
         json.dump(result, f, indent=2)
