@@ -2,7 +2,7 @@
   "run": "baseline",
   "commitments": [
     {
-      "description": "Get the signed W-9 over to Accounts by end of day.",
+      "description": "Send the signed W-9 form.",
       "owed_to": "Accounts",
       "due_date": "2026-09-11",
       "source": "email/2026-09-11-invoice-done.md",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "description": "Have the revised pricing deck over to Marcus by Friday the 25th.",
+      "description": "Send the revised pricing deck to Marcus Reyes.",
       "owed_to": "Marcus Reyes",
       "due_date": "2026-09-25",
       "source": "email/2026-09-17-northwind-pricing-promise.md",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "description": "Include all three tiers plus the prepay discount and break out migration separately in the pricing deck.",
+      "description": "Include all three pricing tiers and prepay discount, and break out migration separately.",
       "owed_to": "Marcus Reyes",
       "due_date": "2026-09-25",
       "source": "email/2026-09-17-northwind-pricing-promise.md",
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "description": "Take a look at the paper Nadia mentioned.",
+      "description": "Review the paper mentioned by Nadia Fournier.",
       "owed_to": "Nadia Fournier",
       "due_date": null,
       "source": "email/2026-09-19-coffee.md",
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "description": "Send intro to Lena Ortiz by Wednesday.",
+      "description": "Send an introduction to Lena Ortiz by Wednesday.",
       "owed_to": "Sam Okafor",
       "due_date": "2026-09-23",
       "source": "slack/dm-sam-okafor.md",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "description": "Think about who else might fit the senior data platform role.",
+      "description": "Think about who else might fit for the data platform side role.",
       "owed_to": "Sam Okafor",
       "due_date": null,
       "source": "slack/dm-sam-okafor.md",
@@ -76,20 +76,21 @@
       ]
     },
     {
-      "description": "Have the support assistant on the Assistants API working end to end for the Sep 30 demo.",
-      "owed_to": "Raj Patel and team",
+      "description": "Ship the support assistant on the Assistants API for the Sep 30 demo.",
+      "owed_to": "Puja's team",
       "due_date": "2026-09-30",
       "source": "meetings/2026-09-16-product-sync.md",
       "quote": "Puja to ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo.",
       "status": "BROKEN",
-      "why": "The OpenAI Assistants API was shut down on August 26, 2026.",
+      "why": "Deprecated 2025-08-26 with twelve months notice; removed from the API on 2026-08-26. Migration path is the Responses API. Azure OpenAI Assistants retired on the same date.",
       "external_entity": "OpenAI Assistants API",
       "web": {
         "status": "BROKEN",
-        "finding": "The OpenAI Assistants API was shut down on August 26, 2026.",
-        "source_url": "https://community.openai.com/t/assistants-api-beta-deprecation-august-26-2026-sunset/1354666",
+        "finding": "Deprecated 2025-08-26 with twelve months notice; removed from the API on 2026-08-26. Migration path is the Responses API. Azure OpenAI Assistants retired on the same date.",
+        "source_url": "https://developers.openai.com/api/docs/deprecations",
         "event_date": "2026-08-26",
-        "_live": true
+        "_live": false,
+        "_fallback_reason": "cached run requested"
       },
       "sources": [
         "meetings/2026-09-16-product-sync.md"
@@ -97,7 +98,7 @@
     },
     {
       "description": "Move the Q4 roadmap over to Miro.",
-      "owed_to": "Dana Whitfield and team",
+      "owed_to": "Puja's team",
       "due_date": null,
       "source": "slack/eng-general.md",
       "quote": "Fine by me, Miro it is. I'll move the Q4 roadmap over.",
@@ -106,18 +107,19 @@
       "external_entity": "Miro",
       "web": {
         "status": "OK",
-        "finding": "Miro continues to be a widely used and active visual workspace application.",
-        "source_url": "https://miro.com/",
-        "event_date": null,
-        "_live": true
+        "finding": "Bending Spoons signed a definitive agreement to acquire Miro, all-cash, enterprise value ~$1.355B, expected to close Q4 2026. Product continues to operate and serve ~250,000 organizations.",
+        "source_url": "https://dealroom.co/news/",
+        "event_date": "2026-09",
+        "_live": false,
+        "_fallback_reason": "cached run requested"
       },
       "sources": [
         "slack/eng-general.md"
       ]
     },
     {
-      "description": "Confirm whether SSO is supported on the mid tier for Northwind.",
-      "owed_to": "Marcus Reyes",
+      "description": "Confirm if we support SSO on the mid tier for Northwind.",
+      "owed_to": "Marcus Reyes (Northwind)",
       "due_date": null,
       "source": "meetings/2026-09-18-northwind-call.md",
       "quote": "Marcus also asked whether we support SSO on the mid tier \u2014 Puja to confirm, no date given.",
@@ -126,10 +128,11 @@
       "external_entity": "Northwind",
       "web": {
         "status": "OK",
-        "finding": "Northwind offers SSO with Okta implementations for the SMB space.",
-        "source_url": "https://northwind.us/",
+        "finding": "No positive evidence of breaking change found for Northwind.",
+        "source_url": null,
         "event_date": null,
-        "_live": true
+        "_live": false,
+        "_fallback_reason": "cached run requested"
       },
       "sources": [
         "meetings/2026-09-18-northwind-call.md"
