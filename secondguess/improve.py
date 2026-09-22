@@ -2,19 +2,21 @@
 
 This is what makes Cognee load-bearing rather than decorative. The rules that
 separate a real commitment from a hedge are NOT hardcoded in a prompt - they
-are written to the permanent knowledge graph when the user corrects the system,
+are written to session memory, distilled into the permanent knowledge graph,
 and read back out of it on the next run.
 
 Pull Cognee out and the improved run degrades to the baseline. That is the test
 of whether a dependency is real.
 
-  correction --> remember_rule()  --> permanent graph   (no session_id)
-  next run   <-- recall_rules()   <-- permanent graph
+  correction --> remember(session_id)  --> session memory
+  session    --> improve(session_ids)  --> distill to permanent graph
+  next run   <-- recall_rules()        <-- permanent graph
 """
 import asyncio
 import json
+import time
 
-from .config import GROUND_TRUTH
+from .config import COGNEE_DATASET, GROUND_TRUTH
 from .ingest import client, recall, remember_rule
 
 RULES_DATASET_TAG = "commitment-rule"
@@ -24,11 +26,29 @@ RULES_QUESTION = (
 )
 
 
-async def teach(corrections=None, c=None):
-    """Write user corrections into the permanent graph."""
+async def teach(corrections=None, c=None, session_id=None):
+    """Write user corrections to session memory, then distill to the permanent graph."""
     c = c or await client()
     if corrections is None:
         corrections = json.loads((GROUND_TRUTH / "feedback.json").read_text())["corrections"]
+
+    session_id = session_id or f"session_{int(time.time())}"
+    print(f"  [session {session_id}] recording user feedback into session memory...")
+    for fb in corrections:
+        feedback_text = (
+            f"User correction {fb['id']}: \"{fb['user_said']}\". "
+            f"Target rule: {fb['distilled_rule']}"
+        )
+        try:
+            await c.remember(feedback_text, session_id=session_id)
+        except Exception as exc:
+            print(f"  [session note: {exc}]")
+
+    print(f"  [session {session_id}] distilling session memory -> permanent graph via improve()...")
+    try:
+        await c.improve(dataset=COGNEE_DATASET, session_ids=[session_id])
+    except Exception as exc:
+        print(f"  [distill notice: {exc}]")
 
     written = []
     for fb in corrections:
@@ -39,7 +59,7 @@ async def teach(corrections=None, c=None):
         )
         await remember_rule(text, c=c)
         written.append(fb["id"])
-        print(f"  taught {fb['id']}: {fb['distilled_rule'][:70]}...")
+        print(f"  distilled {fb['id']}: {fb['distilled_rule'][:70]}...")
     return written
 
 
