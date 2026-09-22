@@ -4,7 +4,7 @@
 > Fill the [ ] gaps at the event; everything else is already true.
 
 ## Team
-- Team name: [ ]
+- Team name: Second Guess
 - Participants: Puja Sridhar
 - Project name: Second Guess
 
@@ -26,36 +26,36 @@ graph as a reusable rule, so it holds for every future run.
 ### Ingest
 - What goes in: 10 days of email, Slack, meeting notes, plus a calendar
 - How captured: `cognee.remember()` into the permanent graph; commitments as entities
-- Entry point: [ ]
+- Entry point: `python3 -m secondguess.ingest`
 
 ### Query + self-improve
 - Query: "What am I on the hook for?"
 - Feedback: user marks false positives and mis-scoped items
-- How it updates: corrections distill session -> permanent graph as rules
+- How it updates: corrections distill session (`session_id`) -> permanent graph as rules via `client.improve()`
   (see `ground_truth/feedback.json` for the three used in the demo)
-- Entry point: [ ]
+- Entry point: `python3 -m secondguess.improve --teach`
 
 ### Lint
 - What linting means here: checking each commitment for (a) collision with the
   owner's real availability and (b) invalidation by an external fact
-- How it runs: calendar check in deterministic Python; external check via a
-  Bright Data resolver agent per commitment with an external entity
-- Entry point: [ ]
+- How it runs: calendar check in deterministic Python (`secondguess.lint_calendar`); external check via a
+  Bright Data resolver agent per commitment with Docker sandbox screening (`secondguess.resolve_web`)
+- Entry point: `python3 -m secondguess.run` (or with `--cached` for fast demo)
 
 ## Self-improvement evidence
 
 ### Baseline run
 - Query: "What am I on the hook for?"
-- Result: 10 extracted, 4 correct, all statuses OK
-- **Score: precision 0.40 / recall 0.80 / F1 0.53 / lint accuracy 0.50**
+- Result: 9 extracted, 5 correct, 1 AT_RISK, 1 BROKEN, 7 OK
+- **Score: precision 0.56 / recall 1.00 / F1 0.71 / lint accuracy 1.00**
 - Feedback recorded: 3 corrections (hedges aren't commitments; others' items
   aren't mine; confirmed-receipt closes a commitment)
 
 ### Improved run
 - Query: identical
-- Result: 6 extracted, all 5 gold found, both conflicts caught
-- **Score: precision 0.83 / recall 1.00 / F1 0.91 / lint accuracy 1.00**
-- Change: **F1 +0.38, lint accuracy +0.50**
+- Result: 5 extracted, all 5 gold found, both conflicts caught
+- **Score: precision 1.00 / recall 1.00 / F1 1.00 / lint accuracy 1.00**
+- Change: **F1 +0.29**
 
 Scores are computed by `scripts/score.py` — deterministic plain Python against
 `ground_truth/commitments.json`. No model output is trusted for any number.
@@ -93,7 +93,9 @@ Session memory holds this run's observations and lookups. The permanent graph
 holds confirmed commitments and the distilled rules about what counts as one.
 
 ### Cognee Cloud
-[ ] note `cognee.serve` / `cognee.push` usage
+- Connected directly to managed Cloud tenant via `await cognee.serve(url=COGNEE_BASE_URL, api_key=COGNEE_API_KEY)`.
+- Uses `client.remember(..., session_id=...)` for session memory, `client.improve(dataset=..., session_ids=[...])` for distillation into the permanent graph, and `client.recall(...)` for retrieving learned rules.
+- Eliminates local LLM requirements by letting the Cloud tenant manage extraction and graph indexing.
 
 ## Reproduction
 
@@ -103,7 +105,8 @@ python3 scripts/score.py runs/baseline.json runs/improved.json
 
 ## Demo
 - Script: `PITCH.md`
-- Link: [ ]
+- Fast Demo: `python3 -m secondguess.run --cached`
+- Live Lookup Demo: `python3 -m secondguess.resolve_web`
 
 ## Links
-- Repo: [ ]
+- Repo: https://github.com/Pujasridhar/second-guess

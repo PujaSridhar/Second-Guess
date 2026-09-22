@@ -87,5 +87,5 @@ Lead with the conflict. Never with the extraction.
 > gets downgraded in Python. The model gets no vote on whether it was fooled.
 
 **"What would you fix next?"**
-> Real inboxes instead of a seeded corpus, and session-to-permanent distillation
-> - right now I only write to the permanent graph.
+> Direct integrations to Google Workspace and Slack via OAuth rather than
+> file sync, and background web polling so dependency changes alert proactively.

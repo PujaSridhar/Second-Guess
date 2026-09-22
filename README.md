@@ -92,11 +92,11 @@ python3 scripts/score.py runs/baseline.json runs/improved.json
 Reference arc with the included sample runs:
 
 ```
-baseline   precision 0.40  recall 0.80  F1 0.53   lint 0.50
-improved   precision 0.83  recall 1.00  F1 0.91   lint 1.00
+baseline   precision 0.56  recall 1.00  F1 0.71   lint 1.00
+improved   precision 1.00  recall 1.00  F1 1.00   lint 1.00
 
-            f1: 0.53  ->  0.91   (+0.38)
- lint_accuracy: 0.50  ->  1.00   (+0.50)
+            f1: 0.71  ->  1.00   (+0.29)
+ lint_accuracy: 1.00  ->  1.00   (+0.00)
 ```
 
 It also names which trap each false positive fell for, which demos well.
