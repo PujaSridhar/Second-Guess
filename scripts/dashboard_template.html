@@ -1,0 +1,154 @@
+<title>Second Guess</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#f7f8fa; --panel:#ffffff; --panel-2:#f1f3f7;
+  --ink:#141922; --ink-2:#4a5464; --ink-3:#78839a;
+  --rule:#dfe3ec; --rule-2:#eceff5;
+  --accent:#0f6f7d; --accent-soft:#e2f1f3;
+  --ok:#2f7d4f; --ok-soft:#e6f2ea;
+  --risk:#9a6700; --risk-soft:#fdf3d8;
+  --broken:#b3261e; --broken-soft:#fbe6e4;
+  --shadow:0 1px 2px rgba(20,25,34,.06),0 8px 24px -16px rgba(20,25,34,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0e1116; --panel:#161b23; --panel-2:#1c222c;
+    --ink:#e8ecf3; --ink-2:#a3adbe; --ink-3:#77839a;
+    --rule:#28303c; --rule-2:#202733;
+    --accent:#5cc6d4; --accent-soft:#12303a;
+    --ok:#6cc48c; --ok-soft:#13291d;
+    --risk:#e0b44a; --risk-soft:#2f2612;
+    --broken:#f08a80; --broken-soft:#33191a;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0e1116; --panel:#161b23; --panel-2:#1c222c;
+  --ink:#e8ecf3; --ink-2:#a3adbe; --ink-3:#77839a;
+  --rule:#28303c; --rule-2:#202733;
+  --accent:#5cc6d4; --accent-soft:#12303a;
+  --ok:#6cc48c; --ok-soft:#13291d;
+  --risk:#e0b44a; --risk-soft:#2f2612;
+  --broken:#f08a80; --broken-soft:#33191a;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 72px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* masthead */
+header{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:20px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.022em;margin:0;text-wrap:balance}
+.tag{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 6px}
+.sub{color:var(--ink-2);font-size:14.5px;margin:8px 0 0;max-width:60ch}
+.asof{font-size:12px;color:var(--ink-3);text-align:right;line-height:1.7}
+
+/* score strip */
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:8px;overflow:hidden;margin:28px 0 36px}
+.score{background:var(--panel);padding:16px 18px}
+.score .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.score .v{font-size:27px;font-weight:600;margin-top:5px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.score .d{font-size:12px;color:var(--ink-2);margin-top:2px;font-variant-numeric:tabular-nums}
+.up{color:var(--ok)}
+
+h2{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px}
+
+/* triage rows — severity stripe, not cards */
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--rule);
+  border-radius:6px;padding:15px 18px}
+.row.ok{border-left-color:var(--ok)}
+.row.risk{border-left-color:var(--risk);box-shadow:var(--shadow)}
+.row.broken{border-left-color:var(--broken);box-shadow:var(--shadow)}
+.rhead{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:baseline}
+.pill{font-size:10px;font-weight:600;letter-spacing:.09em;padding:3px 8px;border-radius:3px;
+  white-space:nowrap;font-family:"IBM Plex Mono",monospace}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.risk{background:var(--risk-soft);color:var(--risk)}
+.pill.broken{background:var(--broken-soft);color:var(--broken)}
+.title{font-weight:600;font-size:15.5px;flex:1;min-width:220px}
+.due{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.owed{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.why{font-size:13.5px;color:var(--ink-2);margin-top:10px;max-width:74ch}
+
+/* evidence */
+.ev{margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule)}
+.evrow{display:grid;grid-template-columns:78px 1fr;gap:8px 12px;font-size:12.5px;margin-bottom:6px}
+.evk{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:600;padding-top:2px}
+.quote{color:var(--ink);border-left:2px solid var(--accent);padding-left:10px}
+.path{color:var(--ink-2);word-break:break-all}
+a{color:var(--accent)}
+.live{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.1em;
+  background:var(--accent-soft);color:var(--accent);padding:2px 6px;border-radius:3px;margin-left:6px}
+
+/* draft */
+.draft{margin-top:12px;background:var(--panel-2);border:1px solid var(--rule-2);
+  border-radius:5px;padding:13px 15px}
+.dlab{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:600;margin-bottom:8px}
+.dmeta{font-size:12.5px;color:var(--ink-2);margin-bottom:8px}
+.dmeta b{color:var(--ink);font-weight:600}
+.dbody{font-size:13.5px;color:var(--ink);max-width:68ch}
+.unsent{font-size:11px;color:var(--ink-3);margin-top:9px;font-style:italic}
+
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-3);max-width:72ch}
+footer b{color:var(--ink-2);font-weight:600}
+footer p{margin:0 0 7px}
+@media (max-width:560px){
+  .evrow{grid-template-columns:1fr;gap:3px}
+  h1{font-size:25px}
+}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <p class="tag">Commitment triage · run 2026-09-21</p>
+    <h1>Second Guess</h1>
+    <p class="sub">The things you're on the hook for live in sentences, not apps. This reads
+    them out of email, Slack and meeting notes, then checks each one against your calendar
+    and the live web.</p>
+  </div>
+  <div class="asof mono">as of 2026-09-21<br>{{SUMMARY}}</div>
+</header>
+
+<div class="scores">
+  <div class="score"><div class="k">Precision</div><div class="v">{{PRECISION}}</div><div class="d">{{PRECISION_BASE}}</div></div>
+  <div class="score"><div class="k">Recall</div><div class="v">{{RECALL}}</div><div class="d">{{RECALL_BASE}}</div></div>
+  <div class="score"><div class="k">F1</div><div class="v">{{F1}}</div><div class="d">{{F1_DELTA}}</div></div>
+  <div class="score"><div class="k">Verdict accuracy</div><div class="v">{{LINT}}</div><div class="d">deterministic</div></div>
+  <div class="score"><div class="k">Labelled set</div><div class="v">{{GOLD}}</div><div class="d">{{TRAPS}}</div></div>
+</div>
+
+<h2>Open commitments</h2>
+<div class="rows">
+{{ROWS}}
+</div>
+
+<footer>
+  <p><b>What the baseline missed.</b> Before three corrections were written to Cognee's
+  permanent graph, the same corpus produced nine items: a hedged "I'll take a look at that
+  paper when I get a chance", a W-9 already confirmed received three lines further down its
+  own thread, and two of Raj's action items read as Puja's.</p>
+  <p><b>Who decides what.</b> The model proposes commitments and names external entities.
+  Every verdict is plain Python — calendar collision, closure detection, deduplication,
+  and an evidence gate that refuses BROKEN without a dated, citable source. Scores are
+  computed against a labelled set; the model never scores itself.</p>
+  <p><b>Honest limits.</b> The corpus is seeded and the internal conflicts are planted. The
+  external facts are real and were verified live at run time. F1 of 1.00 is five
+  commitments against ten decoys, not a benchmark.</p>
+</footer>
+</div>

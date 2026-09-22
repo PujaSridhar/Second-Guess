@@ -2,7 +2,59 @@
   "run": "improved",
   "commitments": [
     {
-      "description": "Provide revised pricing deck to Marcus Reyes",
+      "description": "Move the Q4 roadmap over to Miro",
+      "owed_to": "attendees of the Product Sync meeting",
+      "due_date": null,
+      "source": "slack/eng-general.md",
+      "quote": "Fine by me, Miro it is. I'll move the Q4 roadmap over.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "slack/eng-general.md",
+        "meetings/2026-09-16-product-sync.md"
+      ]
+    },
+    {
+      "description": "Send an intro to Lena Ortiz by Wednesday",
+      "owed_to": "Sam Okafor",
+      "due_date": "2026-09-23",
+      "source": "slack/dm-sam-okafor.md",
+      "quote": "Actually yes. Lena Ortiz \u2014 she was on the ingestion team at my last place and she's genuinely excellent. I'll send that intro to Lena by Wednesday.",
+      "status": "OK",
+      "why": "Due 2026-09-23; owner is available.",
+      "sources": [
+        "slack/dm-sam-okafor.md"
+      ]
+    },
+    {
+      "description": "Have the support assistant on the Assistants API working end to end for the Sep 30 demo",
+      "owed_to": "attendees of the Product Sync meeting",
+      "due_date": "2026-09-30",
+      "source": "meetings/2026-09-16-product-sync.md",
+      "quote": "Puja to ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo.",
+      "status": "BROKEN",
+      "why": "The Assistants API was shut down on August 26, 2026, making the commitment undeliverable.",
+      "external_entity": "Assistants API",
+      "web": {
+        "status": "BROKEN",
+        "finding": "The Assistants API was shut down on August 26, 2026, making the commitment undeliverable.",
+        "source_url": "https://community.openai.com/t/assistants-api-beta-deprecation-august-26-2026-sunset/1354666?page=2",
+        "event_date": "2026-08-26",
+        "_screened": true,
+        "_flags": [],
+        "_live": true
+      },
+      "sources": [
+        "meetings/2026-09-16-product-sync.md"
+      ],
+      "draft": {
+        "to": "attendees of the Product Sync meeting",
+        "subject": "Update on Assistants API Demo",
+        "body": "The Assistants API was shut down on August 26, 2026, which prevents us from having the support assistant ready for the Sep 30 demo. We are exploring alternative solutions and will update you with a new plan shortly. Thank you for your understanding."
+      }
+    },
+    {
+      "description": "Have the revised pricing deck over to Marcus by Friday the 25th",
       "owed_to": "Marcus Reyes",
       "due_date": "2026-09-25",
       "source": "email/2026-09-17-northwind-pricing-promise.md",
@@ -16,61 +68,11 @@
       "draft": {
         "to": "Marcus Reyes",
         "subject": "Revised Pricing Deck Update",
-        "body": "I will provide the revised pricing deck on 2026-09-28 due to out-of-office on 2026-09-25. Thank you for your understanding."
+        "body": "The revised pricing deck will be sent on Monday, September 28th, as I'm out of the office on the 25th. Thank you for your understanding."
       }
     },
     {
-      "description": "Introduce Lena Ortiz to Sam Okafor",
-      "owed_to": "Sam Okafor",
-      "due_date": "2026-09-23",
-      "source": "slack/dm-sam-okafor.md",
-      "quote": "I'll send that intro to Lena by Wednesday.",
-      "status": "OK",
-      "why": "Due 2026-09-23; owner is available.",
-      "sources": [
-        "slack/dm-sam-okafor.md"
-      ]
-    },
-    {
-      "description": "Ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo",
-      "owed_to": "Product Team",
-      "due_date": "2026-09-30",
-      "source": "meetings/2026-09-16-product-sync.md",
-      "quote": "Action: Puja to ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo.",
-      "status": "BROKEN",
-      "why": "Deprecated 2025-08-26 with twelve months notice; removed from the API on 2026-08-26. Migration path is the Responses API. Azure OpenAI Assistants retired on the same date.",
-      "external_entity": "OpenAI Assistants API",
-      "web": {
-        "status": "BROKEN",
-        "finding": "Deprecated 2025-08-26 with twelve months notice; removed from the API on 2026-08-26. Migration path is the Responses API. Azure OpenAI Assistants retired on the same date.",
-        "source_url": "https://developers.openai.com/api/docs/deprecations",
-        "event_date": "2026-08-26",
-        "_live": false,
-        "_fallback_reason": "cached run requested"
-      },
-      "sources": [
-        "meetings/2026-09-16-product-sync.md"
-      ],
-      "draft": {
-        "to": "Product Team",
-        "subject": "Change in Demo Plans for Support Assistant",
-        "body": "We won't ship the support assistant on the Assistants API by Sep 30, 2026, due to its deprecation by Aug 26, 2026. We'll migrate to the Responses API. New completion date will follow."
-      }
-    },
-    {
-      "description": "Move the Q4 roadmap to Miro",
-      "owed_to": "Engineering Team",
-      "due_date": null,
-      "source": "meetings/2026-09-16-product-sync.md",
-      "quote": "Consolidating on Miro. Puja to move the Q4 roadmap over.",
-      "status": "OK",
-      "why": "No due date - nothing to collide with.",
-      "sources": [
-        "meetings/2026-09-16-product-sync.md"
-      ]
-    },
-    {
-      "description": "Confirm if mid-tier supports SSO for Marcus",
+      "description": "Respond to Marcus about SSO support on the mid tier",
       "owed_to": "Marcus Reyes",
       "due_date": null,
       "source": "meetings/2026-09-18-northwind-call.md",
