@@ -1,11 +1,86 @@
 {
-  "run": "improved (lint + 3 distilled corrections)",
+  "run": "improved",
   "commitments": [
-    {"description": "Send the revised pricing deck to Marcus Reyes at Northwind Analytics", "owed_to": "Marcus Reyes", "due_date": "2026-09-25", "status": "AT_RISK"},
-    {"description": "Ship the customer support assistant end to end on the OpenAI Assistants API for the Sep 30 demo", "owed_to": "team", "due_date": "2026-09-30", "status": "BROKEN"},
-    {"description": "Send Sam Okafor an intro to Lena Ortiz for the senior data platform role", "owed_to": "Sam Okafor", "due_date": "2026-09-23", "status": "OK"},
-    {"description": "Move the Q4 roadmap over to Miro", "owed_to": "Dana Whitfield", "due_date": null, "status": "OK"},
-    {"description": "Confirm to Marcus whether SSO is supported on the mid tier", "owed_to": "Marcus Reyes", "due_date": null, "status": "OK"},
-    {"description": "Submit a DataConf 2027 talk before the CFP closes", "owed_to": "DataConf", "due_date": "2026-10-15", "status": "OK"}
+    {
+      "description": "Send the signed W-9",
+      "owed_to": "Accounts at Cascadia Partners",
+      "due_date": "2026-09-11",
+      "source": "email/2026-09-11-invoice-done.md",
+      "quote": "I'll get the signed W-9 over to you by end of day today.",
+      "status": "OK",
+      "why": "Due 2026-09-11; owner is available.",
+      "sources": [
+        "email/2026-09-11-invoice-done.md"
+      ]
+    },
+    {
+      "description": "Deliver revised pricing deck",
+      "owed_to": "Marcus Reyes at Northwind Analytics",
+      "due_date": "2026-09-25",
+      "source": "email/2026-09-17-northwind-pricing-promise.md",
+      "quote": "I'll have the revised pricing deck over to you by Friday the 25th so you have it well ahead of their meeting.",
+      "status": "AT_RISK",
+      "why": "Due 2026-09-25, but the calendar shows 'PTO \u2014 out of office' on 2026-09-25. The promise is in prose; the conflict is in structured data. Nothing joins them today.",
+      "suggested_date": "2026-09-28",
+      "sources": [
+        "email/2026-09-17-northwind-pricing-promise.md"
+      ]
+    },
+    {
+      "description": "Introduce Lena Ortiz to Sam Okafor",
+      "owed_to": "Sam Okafor",
+      "due_date": "2026-09-23",
+      "source": "slack/dm-sam-okafor.md",
+      "quote": "I'll send that intro to Lena by Wednesday.",
+      "status": "OK",
+      "why": "Due 2026-09-23; owner is available.",
+      "sources": [
+        "slack/dm-sam-okafor.md"
+      ]
+    },
+    {
+      "description": "Deliver the support assistant on the Assistants API for demo",
+      "owed_to": "Internal team",
+      "due_date": "2026-09-30",
+      "source": "slack/eng-general.md",
+      "quote": "I'll have the Assistants API version working end to end for the Sep 30 demo, file search can come after.",
+      "status": "BROKEN",
+      "why": "The Assistants API was officially sunset on August 26, 2026, and is no longer available.",
+      "external_entity": "OpenAI Assistants API",
+      "web": {
+        "status": "BROKEN",
+        "finding": "The Assistants API was officially sunset on August 26, 2026, and is no longer available.",
+        "source_url": "https://developers.openai.com/api/docs/assistants/migration",
+        "event_date": "2026-08-26",
+        "_live": true
+      },
+      "sources": [
+        "slack/eng-general.md"
+      ]
+    },
+    {
+      "description": "Move the Q4 roadmap over to Miro",
+      "owed_to": "Internal team",
+      "due_date": null,
+      "source": "slack/eng-general.md",
+      "quote": "Fine by me, Miro it is. I'll move the Q4 roadmap over.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "slack/eng-general.md"
+      ]
+    },
+    {
+      "description": "Confirm SSO support on the mid-tier",
+      "owed_to": "Marcus Reyes at Northwind Analytics",
+      "due_date": null,
+      "source": "meetings/2026-09-18-northwind-call.md",
+      "quote": "Marcus also asked whether we support SSO on the mid tier \u2014 Puja to confirm, no date given.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "meetings/2026-09-18-northwind-call.md"
+      ]
+    }
   ]
 }

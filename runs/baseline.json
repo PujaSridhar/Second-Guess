@@ -1,15 +1,139 @@
 {
-  "run": "baseline (no lint, no feedback)",
+  "run": "baseline",
   "commitments": [
-    {"description": "Send the revised pricing deck to Marcus Reyes at Northwind", "owed_to": "Marcus Reyes", "due_date": "2026-09-25", "status": "OK"},
-    {"description": "Ship the customer support assistant on the OpenAI Assistants API for the Sep 30 demo", "owed_to": "team", "due_date": "2026-09-30", "status": "OK"},
-    {"description": "Send Sam Okafor an intro to Lena Ortiz", "owed_to": "Sam Okafor", "due_date": "2026-09-23", "status": "OK"},
-    {"description": "Move the Q4 roadmap over to Miro", "owed_to": "Dana Whitfield", "due_date": null, "status": "OK"},
-    {"description": "Grab coffee with Nadia sometime soon", "owed_to": "Nadia Fournier", "due_date": null, "status": "OK"},
-    {"description": "Take a look at the paper Nadia mentioned", "owed_to": "Nadia Fournier", "due_date": null, "status": "OK"},
-    {"description": "Have the vendor shortlist to the team by the 29th", "owed_to": "team", "due_date": "2026-09-29", "status": "OK"},
-    {"description": "Send the updated security questionnaire tonight", "owed_to": "Puja", "due_date": "2026-09-14", "status": "OK"},
-    {"description": "Get the signed W-9 over to accounts payable by end of day", "owed_to": "Cascadia Partners", "due_date": "2026-09-11", "status": "OK"},
-    {"description": "Get to the Q4 planning doc at some point this month", "owed_to": "team", "due_date": null, "status": "OK"}
+    {
+      "description": "Get the signed W-9 over to Accounts by end of day.",
+      "owed_to": "Accounts",
+      "due_date": "2026-09-11",
+      "source": "email/2026-09-11-invoice-done.md",
+      "quote": "I'll get the signed W-9 over to you by end of day today.",
+      "status": "OK",
+      "why": "Due 2026-09-11; owner is available.",
+      "sources": [
+        "email/2026-09-11-invoice-done.md"
+      ]
+    },
+    {
+      "description": "Have the revised pricing deck over to Marcus by Friday the 25th.",
+      "owed_to": "Marcus Reyes",
+      "due_date": "2026-09-25",
+      "source": "email/2026-09-17-northwind-pricing-promise.md",
+      "quote": "I'll have the revised pricing deck over to you by Friday the 25th so you have it well ahead of their meeting.",
+      "status": "AT_RISK",
+      "why": "Due 2026-09-25, but the calendar shows 'PTO \u2014 out of office' on 2026-09-25. The promise is in prose; the conflict is in structured data. Nothing joins them today.",
+      "suggested_date": "2026-09-28",
+      "sources": [
+        "email/2026-09-17-northwind-pricing-promise.md"
+      ]
+    },
+    {
+      "description": "Include all three tiers plus the prepay discount and break out migration separately in the pricing deck.",
+      "owed_to": "Marcus Reyes",
+      "due_date": "2026-09-25",
+      "source": "email/2026-09-17-northwind-pricing-promise.md",
+      "quote": "I'll include all three tiers plus the prepay discount, and I'll break out migration separately like you asked.",
+      "status": "AT_RISK",
+      "why": "Due 2026-09-25, but the calendar shows 'PTO \u2014 out of office' on 2026-09-25. The promise is in prose; the conflict is in structured data. Nothing joins them today.",
+      "suggested_date": "2026-09-28",
+      "sources": [
+        "email/2026-09-17-northwind-pricing-promise.md"
+      ]
+    },
+    {
+      "description": "Take a look at the paper Nadia mentioned.",
+      "owed_to": "Nadia Fournier",
+      "due_date": null,
+      "source": "email/2026-09-19-coffee.md",
+      "quote": "I'll take a look at that paper you mentioned when I get a chance \u2014 sounds interesting.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "email/2026-09-19-coffee.md"
+      ]
+    },
+    {
+      "description": "Send intro to Lena Ortiz by Wednesday.",
+      "owed_to": "Sam Okafor",
+      "due_date": "2026-09-23",
+      "source": "slack/dm-sam-okafor.md",
+      "quote": "I'll send that intro to Lena by Wednesday.",
+      "status": "OK",
+      "why": "Due 2026-09-23; owner is available.",
+      "sources": [
+        "slack/dm-sam-okafor.md"
+      ]
+    },
+    {
+      "description": "Think about who else might fit the senior data platform role.",
+      "owed_to": "Sam Okafor",
+      "due_date": null,
+      "source": "slack/dm-sam-okafor.md",
+      "quote": "Also I'll think about who else might fit \u2014 there were a couple of people from the Cascadia project who could be worth a look.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "slack/dm-sam-okafor.md"
+      ]
+    },
+    {
+      "description": "Have the support assistant on the Assistants API working end to end for the Sep 30 demo.",
+      "owed_to": "Raj Patel and team",
+      "due_date": "2026-09-30",
+      "source": "meetings/2026-09-16-product-sync.md",
+      "quote": "Puja to ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo.",
+      "status": "BROKEN",
+      "why": "The OpenAI Assistants API was shut down on August 26, 2026.",
+      "external_entity": "OpenAI Assistants API",
+      "web": {
+        "status": "BROKEN",
+        "finding": "The OpenAI Assistants API was shut down on August 26, 2026.",
+        "source_url": "https://community.openai.com/t/assistants-api-beta-deprecation-august-26-2026-sunset/1354666",
+        "event_date": "2026-08-26",
+        "_live": true
+      },
+      "sources": [
+        "meetings/2026-09-16-product-sync.md"
+      ]
+    },
+    {
+      "description": "Move the Q4 roadmap over to Miro.",
+      "owed_to": "Dana Whitfield and team",
+      "due_date": null,
+      "source": "slack/eng-general.md",
+      "quote": "Fine by me, Miro it is. I'll move the Q4 roadmap over.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "external_entity": "Miro",
+      "web": {
+        "status": "OK",
+        "finding": "Miro continues to be a widely used and active visual workspace application.",
+        "source_url": "https://miro.com/",
+        "event_date": null,
+        "_live": true
+      },
+      "sources": [
+        "slack/eng-general.md"
+      ]
+    },
+    {
+      "description": "Confirm whether SSO is supported on the mid tier for Northwind.",
+      "owed_to": "Marcus Reyes",
+      "due_date": null,
+      "source": "meetings/2026-09-18-northwind-call.md",
+      "quote": "Marcus also asked whether we support SSO on the mid tier \u2014 Puja to confirm, no date given.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "external_entity": "Northwind",
+      "web": {
+        "status": "OK",
+        "finding": "Northwind offers SSO with Okta implementations for the SMB space.",
+        "source_url": "https://northwind.us/",
+        "event_date": null,
+        "_live": true
+      },
+      "sources": [
+        "meetings/2026-09-18-northwind-call.md"
+      ]
+    }
   ]
 }

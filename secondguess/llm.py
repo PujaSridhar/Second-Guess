@@ -43,7 +43,10 @@ def model():
 
 
 def agent(system_prompt, tools=None):
-    return Agent(model=model(), tools=tools or [], system_prompt=system_prompt)
+    # callback_handler=None silences Strands' default streaming print, which
+    # otherwise corrupts stdout when we redirect JSON to a file.
+    return Agent(model=model(), tools=tools or [], system_prompt=system_prompt,
+                 callback_handler=None)
 
 
 def parse_structured(text):
