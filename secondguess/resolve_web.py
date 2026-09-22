@@ -15,6 +15,7 @@ from strands.tools.mcp import MCPClient
 from .config import (AS_OF, BRIGHTDATA_MCP_ARGS, BRIGHTDATA_MCP_CMD, BROKEN,
                      FIXTURES, OK)
 from .llm import agent, parse_structured
+from .sandbox import screen
 
 RESOLVER_PROMPT = f"""You check whether a commitment has been invalidated by
 something that happened in the public world. Today is {AS_OF}.
@@ -77,3 +78,30 @@ def resolve_with_fallback(entity, commitment_text):
             "_live": False,
             "_fallback_reason": str(exc),
         }
+
+
+def guard(finding, raw_scraped_text=None):
+    """Refuse to let injected web content soften a verdict.
+
+    A page we scrape is attacker-controlled. The realistic attack here is a page
+    asserting "this API was never deprecated" so the resolver downgrades BROKEN
+    to OK. So: screen the raw text in the Docker sandbox, and if it carries
+    injection markers, the finding may no longer claim everything is fine.
+
+    Deterministic. The model does not get a vote on whether it was manipulated.
+    """
+    if not raw_scraped_text:
+        return finding
+
+    report = screen(raw_scraped_text)
+    finding["_screened"] = True
+    finding["_flags"] = report["flags"]
+
+    if report["flags"] and finding.get("status") == OK:
+        finding["status"] = "UNVERIFIED"
+        finding["finding"] = (
+            "Source content carried prompt-injection markers "
+            f"({', '.join(report['flags'])}); its claim that this commitment is "
+            "fine is not trusted. Needs a human look."
+        )
+    return finding

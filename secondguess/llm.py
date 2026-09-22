@@ -1,28 +1,44 @@
 """Shared Strands agent construction.
 
 Verified against strands-agents 1.56.0:
-  AnthropicModel(client_args={...}, model_id=..., max_tokens=...)
+  OpenAIModel(client_args={"api_key": ...}, model_id=..., params={...})
   Agent(model=..., tools=[...], system_prompt=...)
+
+Strands is provider-agnostic. We use OpenAI because that's the key on hand;
+swapping to Anthropic or Bedrock is a one-line change in model().
 """
 import ast
 import json
 import os
 import re
 
+from dotenv import load_dotenv
 from strands import Agent
-from strands.models.anthropic import AnthropicModel
 
-from .config import MAX_TOKENS, MODEL_ID
+from .config import MAX_TOKENS, MODEL_ID, ROOT
+
+load_dotenv(ROOT / ".env")
 
 
 def model():
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not set")
-    return AnthropicModel(
-        client_args={"api_key": key},
-        model_id=MODEL_ID,
-        max_tokens=MAX_TOKENS,
+    key = os.environ.get("OPENAI_API_KEY", "").strip('"')
+    if key:
+        from strands.models.openai import OpenAIModel
+        return OpenAIModel(
+            client_args={"api_key": key},
+            model_id=MODEL_ID,
+            params={"max_completion_tokens": MAX_TOKENS},
+        )
+    key = os.environ.get("ANTHROPIC_API_KEY", "").strip('"')
+    if key:
+        from strands.models.anthropic import AnthropicModel
+        return AnthropicModel(
+            client_args={"api_key": key},
+            model_id="claude-sonnet-5",
+            max_tokens=MAX_TOKENS,
+        )
+    raise RuntimeError(
+        "No LLM key. Add OPENAI_API_KEY (or ANTHROPIC_API_KEY) to .env"
     )
 
 

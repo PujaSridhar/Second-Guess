@@ -13,7 +13,7 @@ OWNER = "Puja Sridhar"
 OWNER_EMAIL = "puja@example.com"
 
 # Verified against strands-agents 1.56.0: AnthropicConfig takes model_id + max_tokens.
-MODEL_ID = "claude-sonnet-5"
+MODEL_ID = "gpt-4o"
 MAX_TOKENS = 4096
 
 # Bright Data MCP is a node process launched over stdio.
