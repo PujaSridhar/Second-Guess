@@ -9,6 +9,7 @@ import json
 
 from .config import AT_RISK, BROKEN, OK, RUNS
 from .extract import extract
+from .closure import is_closed
 from .lint_calendar import busy_days, check as calendar_check
 from .llm import agent, parse_structured
 
@@ -73,12 +74,19 @@ def dedupe(commitments, threshold=0.6):
     return merged
 
 
-def run(learned=False, use_web=True, sandbox=True):
+def run(learned=False, use_web=True, sandbox=True, draft_actions=True):
     commitments = extract(learned=learned)
     busy = busy_days()
     entities = name_entities(commitments) if use_web else {}
 
     for i, c in enumerate(commitments):
+        # 0. Already delivered? Then it is not an open commitment at all.
+        closed, reason = is_closed(c)
+        if closed:
+            c["status"] = "CLOSED"
+            c["why"] = reason
+            continue
+
         # 1. Availability lint - deterministic, no network.
         status, why, suggested = calendar_check(c, busy)
         c["status"], c["why"] = status, why
@@ -123,6 +131,10 @@ def run(learned=False, use_web=True, sandbox=True):
             c["why"] += " (external check untrusted: " + ", ".join(found.get("_flags", [])) + ")"
 
     commitments = dedupe(commitments)
+    commitments = [c for c in commitments if c.get("status") != "CLOSED"]
+    if draft_actions:
+        from .act import draft_all
+        draft_all(commitments)
     return {"run": "improved" if learned else "baseline", "commitments": commitments}
 
 
@@ -143,3 +155,9 @@ if __name__ == "__main__":
         mark = {OK: "  ", AT_RISK: "! ", BROKEN: "!!"}.get(c["status"], "? ")
         print(f"{mark}[{c['status']:8}] {c['description'][:64]}")
         print(f"        {c['why'][:150]}")
+        d = c.get("draft")
+        if d and "body" in d:
+            print(f"        DRAFT -> to: {d.get('to')} | {d.get('subject')}")
+            for line in d["body"].splitlines():
+                if line.strip():
+                    print(f"          {line.strip()[:90]}")

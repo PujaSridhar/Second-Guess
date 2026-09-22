@@ -2,19 +2,7 @@
   "run": "improved",
   "commitments": [
     {
-      "description": "Send the signed W-9",
-      "owed_to": "Accounts",
-      "due_date": "2026-09-11",
-      "source": "email/2026-09-11-invoice-done.md",
-      "quote": "I'll get the signed W-9 over to you by end of day today.",
-      "status": "OK",
-      "why": "Due 2026-09-11; owner is available.",
-      "sources": [
-        "email/2026-09-11-invoice-done.md"
-      ]
-    },
-    {
-      "description": "Send revised pricing deck for Northwind",
+      "description": "Deliver revised pricing deck for Q4 rollout",
       "owed_to": "Marcus Reyes",
       "due_date": "2026-09-25",
       "source": "email/2026-09-17-northwind-pricing-promise.md",
@@ -24,10 +12,15 @@
       "suggested_date": "2026-09-28",
       "sources": [
         "email/2026-09-17-northwind-pricing-promise.md"
-      ]
+      ],
+      "draft": {
+        "to": "Marcus Reyes",
+        "subject": "Updated Delivery Date for Q4 Pricing Deck",
+        "body": "The revised pricing deck for the Q4 rollout will be delivered on 2026-09-28, as I will be out of the office on 2026-09-25. Thank you for your understanding."
+      }
     },
     {
-      "description": "Send introduction to Lena Ortiz",
+      "description": "Send an introduction to Lena Ortiz for a senior role",
       "owed_to": "Sam Okafor",
       "due_date": "2026-09-23",
       "source": "slack/dm-sam-okafor.md",
@@ -39,35 +32,60 @@
       ]
     },
     {
-      "description": "Develop and ship the customer-support assistant using OpenAI Assistants API for Sep 30 demo",
-      "owed_to": "Not specified in the document",
+      "description": "Complete support assistant build on Assistants API for demo",
+      "owed_to": "Product team",
       "due_date": "2026-09-30",
-      "source": "meetings/2026-09-16-product-sync.md",
-      "quote": "Puja to ship the support assistant on the Assistants API, working end to end, for the Sep 30 demo.",
+      "source": "slack/eng-general.md",
+      "quote": "I'll have the Assistants API version working end to end for the Sep 30 demo.",
       "status": "BROKEN",
-      "why": "The OpenAI Assistants API was shut down on August 26, 2026.",
+      "why": "The Assistants API was officially sunset on August 26, 2026, and is no longer available.",
       "external_entity": "OpenAI Assistants API",
       "web": {
         "status": "BROKEN",
-        "finding": "The OpenAI Assistants API was shut down on August 26, 2026.",
-        "source_url": "https://ainewshome.com/changes/openai-assistants-api-sunset-2026",
+        "finding": "The Assistants API was officially sunset on August 26, 2026, and is no longer available.",
+        "source_url": "https://developers.openai.com/api/docs/assistants/migration",
         "event_date": "2026-08-26",
         "_live": true
       },
       "sources": [
-        "meetings/2026-09-16-product-sync.md"
-      ]
+        "slack/eng-general.md"
+      ],
+      "draft": {
+        "to": "Product team",
+        "subject": "Change in Demo Plan for Support Assistant",
+        "body": "The Assistants API has been sunset as of August 26, 2026. We'll explore alternative APIs for the support assistant build. Please anticipate a new plan by October 15, 2026. Thank you for your patience."
+      }
     },
     {
-      "description": "Move the Q4 roadmap to Miro",
-      "owed_to": "Not specified in the document",
+      "description": "Move Q4 roadmap to Miro",
+      "owed_to": "Engineering team",
       "due_date": null,
       "source": "slack/eng-general.md",
       "quote": "I'll move the Q4 roadmap over.",
       "status": "OK",
       "why": "No due date - nothing to collide with.",
+      "external_entity": "Miro",
+      "web": {
+        "status": "OK",
+        "finding": "Miro continues to add new features and remains operational as of 2026.",
+        "source_url": "https://miro.com/blog/updates/",
+        "event_date": null,
+        "_live": true
+      },
       "sources": [
         "slack/eng-general.md"
+      ]
+    },
+    {
+      "description": "Confirm if SSO is supported on the mid tier",
+      "owed_to": "Marcus Reyes",
+      "due_date": null,
+      "source": "meetings/2026-09-18-northwind-call.md",
+      "quote": "Puja to confirm, no date given.",
+      "status": "OK",
+      "why": "No due date - nothing to collide with.",
+      "sources": [
+        "meetings/2026-09-18-northwind-call.md"
       ]
     }
   ]
