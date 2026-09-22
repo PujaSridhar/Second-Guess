@@ -170,14 +170,57 @@ if __name__ == "__main__":
     with open(out, "w") as f:
         json.dump(result, f, indent=2)
 
-    print(f"\n{result['run']}: {len(result['commitments'])} commitments -> {out}\n")
-    for c in result["commitments"]:
-        mark = {OK: "  ", AT_RISK: "! ", BROKEN: "!!"}.get(c["status"], "? ")
-        print(f"{mark}[{c['status']:8}] {c['description'][:64]}")
-        print(f"        {c['why'][:150]}")
-        d = c.get("draft")
-        if d and "body" in d:
-            print(f"        DRAFT -> to: {d.get('to')} | {d.get('subject')}")
-            for line in d["body"].splitlines():
-                if line.strip():
-                    print(f"          {line.strip()[:90]}")
+    try:
+        from rich.console import Console
+        from rich.table import Table
+        from rich.panel import Panel
+        from rich import box
+
+        # Fixed width so the table is legible on a projector and does not
+        # collapse into unreadable wrapping when piped.
+        console = Console(width=150)
+        title_color = "cyan" if a.learned else "yellow"
+        run_label = f"Second Guess — {result['run'].upper()} Run ({len(result['commitments'])} commitments)"
+        table = Table(title=f"[bold {title_color}]{run_label}[/]", box=box.ROUNDED, header_style="bold magenta")
+        table.add_column("Status", width=12, justify="center")
+        table.add_column("Commitment", style="bold", ratio=2)
+        table.add_column("Due", width=11, justify="center")
+        table.add_column("Conflict / Diagnosis", ratio=3)
+
+        style_map = {
+            BROKEN: "[bold white on red] BROKEN [/]",
+            AT_RISK: "[bold black on yellow] AT_RISK [/]",
+            OK: "[bold white on green] OK [/]",
+        }
+
+        for c in result["commitments"]:
+            st = style_map.get(c["status"], c["status"])
+            table.add_row(
+                st,
+                c["description"],
+                c.get("due_date") or "—",
+                c.get("why") or "—",
+            )
+        console.print()
+        console.print(table)
+
+        drafts = [c for c in result["commitments"] if c.get("draft")]
+        if drafts:
+            console.print("\n[bold cyan]── Action Follow-Up Drafts (Ready for Review) ──[/]\n")
+            for c in drafts:
+                d = c["draft"]
+                card = f"[bold]To:[/] {d.get('to')}\n[bold]Subject:[/] {d.get('subject')}\n\n{d.get('body')}"
+                console.print(Panel(card, title=f"[bold yellow]Draft: {c['description'][:50]}[/]", border_style="cyan"))
+
+    except ImportError:
+        print(f"\n{result['run']}: {len(result['commitments'])} commitments -> {out}\n")
+        for c in result["commitments"]:
+            mark = {OK: "  ", AT_RISK: "! ", BROKEN: "!!"}.get(c["status"], "? ")
+            print(f"{mark}[{c['status']:8}] {c['description'][:64]}")
+            print(f"        {c['why'][:150]}")
+            d = c.get("draft")
+            if d and "body" in d:
+                print(f"        DRAFT -> to: {d.get('to')} | {d.get('subject')}")
+                for line in d["body"].splitlines():
+                    if line.strip():
+                        print(f"          {line.strip()[:90]}")
