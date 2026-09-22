@@ -116,14 +116,46 @@ It also names which trap each false positive fell for, which demos well.
 ## Setup
 
 ```bash
-# Cognee (use Cloud - "Best use of Cognee Cloud" was a bonus track last time)
-export COGNEE_API_KEY=...
-# Bright Data MCP
-export BRIGHT_DATA_API_TOKEN=...
-# Strands is model-agnostic. If Bedrock access is any friction, point it at
-# Anthropic directly and move on. Do not spend hackathon minutes on IAM.
-export ANTHROPIC_API_KEY=...
+python3 -m venv .venv && source .venv/bin/activate
+pip install strands-agents strands-agents-tools 'strands-agents[anthropic]' cognee
+npm install -g @brightdata/mcp        # Bright Data MCP runs as a node process
+cp .env.example .env                  # then fill it in
 ```
 
-Note: AWS credits are listed in the **prize** pool, not handed out at the door.
-The $100 upfront is Cognee + Bright Data.
+**Credits**
+
+| Sponsor | How |
+|---|---|
+| Cognee $50 | promo `PERSONALBRAIN0926` at <https://platform.cognee.ai/billing> |
+| Bright Data $50 | promo `cognee50` at <https://brightdata.com?promo=cognee50&hs_signup=1> |
+| AWS $25 | <https://pulse.amazon/promotion/ZENKK7R1> |
+
+Discord: `#hackathon-sf-sept-26`
+
+**Verified API surface** (installed and introspected, not guessed):
+
+```python
+# strands-agents 1.56.0
+AnthropicModel(client_args={"api_key": ...}, model_id=..., max_tokens=...)
+Agent(model=..., tools=[...], system_prompt=...)
+from mcp import StdioServerParameters, stdio_client
+from strands.tools.mcp import MCPClient
+
+# cognee
+await cognee.remember(data, dataset_name=..., session_id=None, self_improvement=True)
+await cognee.recall(query_text=..., datasets=[...])
+```
+
+Strands is model-agnostic and the Bright Data guide itself uses `ANTHROPIC_API_KEY`.
+Use Anthropic direct; don't spend hackathon minutes on IAM. AWS credits are a
+prize, not a door gift.
+
+## First 15 minutes at the event
+
+1. `python -m secondguess.lint_calendar` — works with **no keys**, proves the
+   corpus and the deterministic half are live.
+2. Redeem all three credits, fill `.env`.
+3. Smoke-test one Cognee `remember` and one Bright Data lookup **before**
+   building anything on top of them.
+4. `python -m secondguess.extract > runs/baseline.json` — your real baseline.
+   Delete the hand-written sample runs; they are targets, not results.
