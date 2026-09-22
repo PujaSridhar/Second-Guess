@@ -98,6 +98,23 @@ def run(learned=False, use_web=True, sandbox=True):
             continue
 
         c["web"] = found
+
+        # A model may report BROKEN simply because it found nothing - absence of
+        # evidence read as evidence of absence. A false alarm on a healthy
+        # commitment is worse than a miss, so BROKEN is only accepted with
+        # positive, citable evidence: a source URL and a dated event. This is a
+        # Python gate; the model cannot assert BROKEN on its own say-so.
+        if found.get("status") == BROKEN and not (
+            found.get("source_url") and found.get("event_date")
+        ):
+            found["status"] = OK
+            found["finding"] = (
+                "No positive evidence of a breaking change was found, so the "
+                "commitment stands. (Model proposed BROKEN without a dated, "
+                "cited source; rejected.)"
+            )
+            c["web_verdict_rejected"] = True
+
         # BROKEN outranks everything: an undeliverable promise is not merely at risk.
         if found.get("status") == BROKEN:
             c["status"] = BROKEN

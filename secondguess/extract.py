@@ -48,8 +48,31 @@ def corpus():
     return docs
 
 
+def learned_rules():
+    """Read the rules out of Cognee's permanent graph.
+
+    Not a constant in this file: the rules got there because the user corrected
+    the system, and they come back because the graph remembers. If Cognee is
+    unreachable we fall back to the literal corrections rather than silently
+    pretending the brain learned something.
+    """
+    import asyncio
+    from .improve import recall_rules
+    try:
+        text = asyncio.run(recall_rules())
+        if text and text.strip():
+            return "\n\nRules you have learned from past corrections:\n" + text.strip()
+    except Exception as exc:
+        print(f"  [cognee recall failed: {exc}; using local corrections]")
+    import json
+    from .config import GROUND_TRUTH
+    fb = json.loads((GROUND_TRUTH / "feedback.json").read_text())["corrections"]
+    return "\n\nRules you have learned from past corrections:\n" + "\n".join(
+        f"- {c['distilled_rule']}" for c in fb)
+
+
 def extract(learned=False):
-    prompt = BASE_PROMPT + (LEARNED_RULES if learned else "")
+    prompt = BASE_PROMPT + (learned_rules() if learned else "")
     blob = "\n\n".join(f"--- {name} ---\n{text}" for name, text in corpus())
     reply = agent(prompt)(f"Extract the commitments.\n\n{blob}")
     items = parse_structured(str(reply))

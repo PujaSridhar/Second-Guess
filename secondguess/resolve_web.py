@@ -26,7 +26,9 @@ Search the web for the named entity. Decide ONE of:
   "OK"      - the entity changed but the commitment still stands
               (e.g. the company was acquired but the product runs)
 
-Be strict. Most changes do not break a commitment. Return ONLY:
+Be strict. Most changes do not break a commitment. If you cannot FIND
+information about the entity, that is not evidence it is broken - return OK.
+Only return BROKEN with a real source_url and a real event_date. Return ONLY:
   {{"status": "BROKEN|OK", "finding": "one sentence", "source_url": "...",
     "event_date": "YYYY-MM-DD or null"}}"""
 
