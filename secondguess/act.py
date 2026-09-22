@@ -32,10 +32,15 @@ def draft(commitment):
 
 
 def draft_all(commitments):
+    to_draft = [c for c in commitments if c.get("status") in (AT_RISK, BROKEN)]
+    if not to_draft:
+        return []
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        drafts = list(ex.map(draft, to_draft))
     out = []
-    for c in commitments:
-        d = draft(c)
-        if d:
+    for c, d in zip(to_draft, drafts):
+        if d and isinstance(d, dict) and "error" not in d:
             c["draft"] = d
             out.append((c, d))
     return out
